@@ -1,0 +1,151 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Manuel Sınav Girişi{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+   <div class="row justify-content-center">
+       <div class="col-md-10">
+           <div class="card">
+               <div class="card-header">
+                   <h4 class="mb-0">{{ exam.course.code }} - Manuel Sınav Girişi</h4>
+                   <small class="text-muted">{{ exam.get_exam_type_display }} - {{ exam.exam_date }}</small>
+               </div>
+               <div class="card-body">
+                   {% if failed_students %}
+                   <div class="alert alert-info">
+                       <h5>OCR ile Okunamayan Öğrenci Numaraları:</h5>
+                       <p class="mb-0">{{ failed_students|join:", " }}</p>
+                   </div>
+                   {% endif %}
+
+                   <form method="post" id="manualExamForm" class="needs-validation" novalidate>
+                       {% csrf_token %}
+
+                       <div class="mb-4">
+                           <label class="form-label fw-bold">Öğrenci Numarası</label>
+                           {{ form.student_number }}
+                           {% if form.student_number.errors %}
+                           <div class="invalid-feedback d-block">
+                               {{ form.student_number.errors }}
+                           </div>
+                           {% endif %}
+                       </div>
+
+                       <div class="card mb-4">
+                           <div class="card-header">
+                               <h5 class="mb-0">Puan Tablosu</h5>
+                           </div>
+                           <div class="card-body">
+                               <div class="table-responsive">
+                                   <table class="table table-bordered">
+                                       <thead>
+                                           <tr>
+                                               {% for field in form %}
+                                                   {% if 'question_' in field.name %}
+                                                   <th class="text-center">{{ field.label }}</th>
+                                                   {% endif %}
+                                               {% endfor %}
+                                               <th class="text-center">Toplam</th>
+                                           </tr>
+                                           <tr class="table-light">
+                                               {% for field in form %}
+                                                   {% if 'question_' in field.name %}
+                                                   <td class="text-center">{{ field.field.widget.attrs.data_max }}</td>
+                                                   {% endif %}
+                                               {% endfor %}
+                                               <td class="text-center">100</td>
+                                           </tr>
+                                       </thead>
+                                       <tbody>
+                                           <tr>
+                                               {% for field in form %}
+                                                   {% if 'question_' in field.name %}
+                                                   <td>
+                                                       {{ field }}
+                                                       {% if field.errors %}
+                                                       <div class="invalid-feedback d-block">
+                                                           {{ field.errors }}
+                                                       </div>
+                                                       {% endif %}
+                                                   </td>
+                                                   {% endif %}
+                                               {% endfor %}
+                                               <td class="align-middle text-center">
+                                                   <span id="totalScore" class="fw-bold">0</span>
+                                               </td>
+                                           </tr>
+                                       </tbody>
+                                   </table>
+                               </div>
+
+                               <div class="alert alert-warning mt-3">
+                                   <i class="bi bi-exclamation-triangle me-2"></i>
+                                   Girilen puanların toplamı 100'den fazla olamaz ve her bir puan maksimum değerinden büyük olamaz.
+                               </div>
+                           </div>
+                       </div>
+
+                       <div class="text-end">
+                           <a href="{% url 'exam_list' %}" class="btn btn-secondary">
+                               <i class="bi bi-x-circle me-2"></i>İptal
+                           </a>
+                           <button type="submit" class="btn btn-primary ms-2">
+                               <i class="bi bi-save me-2"></i>Kaydet
+                           </button>
+                       </div>
+                   </form>
+               </div>
+           </div>
+       </div>
+   </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+   const form = document.getElementById('manualExamForm');
+   const scoreInputs = document.querySelectorAll('.question-score');
+   const totalScoreDisplay = document.getElementById('totalScore');
+
+   function updateTotalScore() {
+       let total = 0;
+       let isValid = true;
+
+       scoreInputs.forEach(input => {
+           const value = parseFloat(input.value) || 0;
+           const maxScore = parseFloat(input.getAttribute('data_max'));
+
+           if (value > maxScore) {
+               input.classList.add('is-invalid');
+               isValid = false;
+           } else {
+               input.classList.remove('is-invalid');
+           }
+
+           total += value;
+       });
+
+       if (total > 100) {
+           totalScoreDisplay.classList.add('text-danger');
+       } else {
+           totalScoreDisplay.classList.remove('text-danger');
+       }
+
+       totalScoreDisplay.textContent = total.toFixed(2);
+       return isValid && total <= 100;
+   }
+
+   scoreInputs.forEach(input => {
+       input.addEventListener('input', updateTotalScore);
+   });
+
+   form.addEventListener('submit', function(e) {
+       if (!updateTotalScore() || !form.checkValidity()) {
+           e.preventDefault();
+           e.stopPropagation();
+       }
+       form.classList.add('was-validated');
+   });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,33 @@
+# Web Framework
+Django==5.0.1
+
+# Image Processing
+Pillow==10.2.0
+pdf2image==1.16.3  # PDF işleme için
+opencv-python==4.9.0.80  # OCR öncesi görüntü işleme için
+
+# OCR
+google-cloud-vision==3.7.1  # Google Cloud Vision API için
+
+# Excel Processing
+openpyxl==3.1.2  # Excel dosyaları için (.xlsx)
+xlwt==1.3.0      # Eski Excel formatı için (.xls)
+pandas==2.1.4    # Excel ve veri analizi için
+
+# UI & Frontend
+django-bootstrap5==23.4  # Bootstrap 5 entegrasyonu için
+
+# Development & Debugging
+python-dotenv==1.0.0  # Ortam değişkenleri için
+django-debug-toolbar==4.2.0  # Geliştirme sırasında debugging için
+
+# Testing
+pytest==7.4.4
+pytest-django==4.7.0
+
+# Production
+gunicorn==21.2.0  # Production sunucusu için
+whitenoise==6.6.0  # Statik dosya sunumu için
+
+# Security
+django-cors-headers==4.3.1  # CORS yönetimi için

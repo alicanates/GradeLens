@@ -1,0 +1,98 @@
+{% extends 'core/base.html' %}
+{% block title %}GradeLens - Grafikler{% endblock %}
+{% block content %}
+
+<div class="welcome-dashboard">
+    <div class="header-section text-center mb-5">
+        <div class="page-title-container mb-4 p-4">
+            <h1 class="page-title mb-3">Veri Analizi ve Grafikler</h1>
+            <p>Sınav ve öğrenci verilerini analiz edin, görselleştirin ve raporlayın.</p>
+        </div>
+    </div>
+
+    <div class="container mt-4">
+        <div class="row">
+            <!-- Veri Seçim Paneli -->
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Veri Seçimi</h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- Veri Kaynağı Seçimi -->
+                        <div class="mb-3">
+                            <label class="form-label">Veri Kaynağı</label>
+                            <select class="form-select" id="dataSourceSelect">
+                                <option value="exam_results">Sınav Sonuçları</option>
+                                <option value="question_analysis">Soru Analizi</option>
+                            </select>
+                        </div>
+
+                        <!-- Sınav Seçimi (Soru Analizi için) -->
+                        <div id="examSelectionContainer" class="mb-3" style="display: none;">
+                            <label class="form-label">Sınav Seçimi</label>
+                            <select class="form-select" id="examSelect">
+                                <option value="">Sınav seçiniz</option>
+                            </select>
+                        </div>
+
+                        <!-- Boyutlar -->
+                        <div class="mb-3">
+                            <label class="form-label">Boyutlar</label>
+                            <div id="dimensionsContainer">
+                                <!-- JavaScript ile doldurulacak -->
+                            </div>
+                        </div>
+
+                        <!-- Metrikler -->
+                        <div class="mb-3">
+                            <label class="form-label">Metrikler</label>
+                            <div id="metricsContainer">
+                                <!-- JavaScript ile doldurulacak -->
+                            </div>
+                        </div>
+
+                        <!-- Grafik Türü Seçimi -->
+                        <div class="mb-3">
+                            <label class="form-label">Grafik Türü</label>
+                            <select class="form-select" id="chartTypeSelect">
+                                <option value="bar">Çubuk Grafik</option>
+                                <option value="line">Çizgi Grafik</option>
+                                <option value="pie">Pasta Grafik</option>
+                                <option value="scatter" style="display: none;">Dağılım Grafiği</option>
+                            </select>
+                        </div>
+
+                        <button class="btn btn-primary w-100" id="generateChartBtn">
+                            Grafik Oluştur
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grafik Görüntüleme Alanı -->
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="card-title mb-0">Grafik Görünümü</h5>
+                        <div class="btn-group">
+                            <button class="btn btn-sm btn-outline-secondary" id="exportPNG">
+                                PNG İndir
+                            </button>
+                            <button class="btn btn-sm btn-outline-secondary" id="exportPDF">
+                                PDF İndir
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="chartContainer" style="width: 100%; height: 500px;">
+                            <!-- Grafik buraya yüklenecek -->
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

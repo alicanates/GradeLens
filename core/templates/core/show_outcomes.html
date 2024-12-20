@@ -1,0 +1,77 @@
+{% extends 'core/base.html' %}
+{% load custom_filters %}
+
+{% block title %}{{ exam.course.code }} - Kazanım Analizi{% endblock %}
+
+{% block content %}
+<div class="welcome-dashboard">
+    <div class="header-section text-center mb-5">
+        <div class="page-title-container mb-4 p-4">
+            <h1 class="page-title mb-3">{{ exam.course.code }} - Kazanım Analizi</h1>
+            <p class="page-description">
+                {{ exam.get_exam_type_display }} sınavına ait soru ve kazanım başarı oranlarını inceleyin.
+            </p>
+        </div>
+    </div>
+
+    <div class="container mt-4">
+        {% if grouped_outcomes %}
+        <!-- Tablo üstünde Excel'e Aktar Butonu -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <small class="text-muted">
+                Bu sınav için toplam {{ grouped_outcomes|length }} kazanım kaydı bulundu.
+            </small>
+            <a href="?export=excel" class="btn btn-success">Excel'e Aktar</a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover align-middle">
+                <thead class="table-primary">
+                <tr>
+                    <th scope="col">Kazanım</th>
+                    {% for i in max_question|get_range %}
+                    <th scope="col" class="text-center">Soru {{ i|add:"1" }} Kazanım Oranı</th>
+                    {% endfor %}
+                    <th scope="col" class="text-center">Toplam Kazanım Oranı</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for outcome_key, outcome_data in grouped_outcomes.items %}
+                <tr>
+                    <td>{{ outcome_key }}</td>
+                    {% for i in max_question|get_range %}
+                    <td class="text-center">
+                        {% with question_num=i|add:"1" %}
+                        {% if question_num in outcome_data.questions %}
+                        %{{ outcome_data.questions|get_item:question_num|get_item:'success_rate'|floatformat:2 }}
+                        {% else %}
+                        -
+                        {% endif %}
+                        {% endwith %}
+                    </td>
+                    {% endfor %}
+                    <td>
+                        <div class="progress" style="height: 20px;">
+                            <div class="progress-bar {% if outcome_data.total_success_rate >= 70 %}bg-success{% elif outcome_data.total_success_rate >= 40 %}bg-warning{% else %}bg-danger{% endif %}"
+                                 role="progressbar"
+                                 style="width: {{ outcome_data.total_success_rate }}%"
+                                 aria-valuenow="{{ outcome_data.total_success_rate }}"
+                                 aria-valuemin="0"
+                                 aria-valuemax="100">
+                                %{{ outcome_data.total_success_rate|floatformat:2 }}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-info">
+            Bu sınav için henüz kazanım eklenmemiş.
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

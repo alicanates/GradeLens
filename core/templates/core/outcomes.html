@@ -1,0 +1,82 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Ders Kazanımları{% endblock %}
+
+{% block content %}
+<div class="welcome-dashboard">
+    <div class="header-section text-center mb-5">
+        <div class="page-title-container mb-4 p-4">
+            <h1 class="page-title mb-3">Ders Kazanımları</h1>
+            <p class="page-description">
+                Seçilen derslere ait sınav kazanımlarını görüntüleyin veya yeni kazanımlar ekleyin.
+            </p>
+        </div>
+    </div>
+
+    <div class="container mt-4">
+        <form method="get" class="mb-4">
+            <div class="form-group">
+                <label for="course">Ders Seçimi:</label>
+                <select name="course" id="course" class="form-control" onchange="this.form.submit()">
+                    <option value="">Ders seçiniz</option>
+                    {% for course in courses %}
+                    <option value="{{ course.code }}" {% if course.code == selected_course %}selected{% endif %}>
+                        {{ course.code }} - {{ course.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </form>
+
+        {% if selected_course %}
+        {% if exams %}
+        <h3 class="mb-3">Sınavlar</h3>
+        <div class="list-group">
+            {% for exam in exams %}
+            <div class="list-group-item">
+                <h5>{{ exam.get_exam_type_display }} - {{ exam.exam_date }}</h5>
+                <div class="btn-group">
+                    <a href="{% url 'add_outcome' exam.id %}" class="btn btn-primary btn-sm">
+                        Kazanım Ekle
+                    </a>
+                    <a href="{% url 'show_outcomes' exam.id %}" class="btn btn-info btn-sm">
+                        Kazanımları Göster
+                    </a>
+                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#deleteModal{{ exam.id }}">
+                        Kazanımları Sil
+                    </button>
+                </div>
+            </div>
+
+            <!-- Silme Onay Modali -->
+            <div class="modal fade" id="deleteModal{{ exam.id }}" tabindex="-1"
+                 aria-labelledby="deleteModalLabel{{ exam.id }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel{{ exam.id }}">Kazanımları Sil</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                        </div>
+                        <div class="modal-body">
+                            {{ exam.course.code }} - {{ exam.get_exam_type_display }} sınavına ait tüm kazanımları
+                            silmek istediğinizden emin misiniz?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                            <a href="{% url 'delete_outcomes' exam.id %}" class="btn btn-danger">Evet, Sil</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="alert alert-warning">
+            Seçilen derse ait sınav kaydı bulunamadı.
+        </div>
+        {% endif %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

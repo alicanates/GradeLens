@@ -1,0 +1,39 @@
+{% extends 'core/base.html' %}
+
+{% block title %}GradeLens - Sınav Listesi{% endblock %}
+
+{% block content %}
+<div class="welcome-dashboard">
+    <div class="header-section text-center mb-5">
+        <div class="page-title-container mb-4 p-4">
+            <h1 class="page-title mb-3">Sınav Listesi</h1>
+            <p class="page-description">
+                Sistemdeki tüm sınavları listeleyin ve analiz etmek için seçin.
+            </p>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        {% for exam in exams %}
+        <div class="col-md-4">
+            <div class="card exam-card exam-card-hover h-100">
+                <div class="card-body">
+                    <h5 class="card-title text-primary fw-bold">{{ exam.course.code }}</h5>
+                    <p class="card-text">
+                        <strong class="text-muted">Dönem:</strong> <span
+                            class="fw-bold">{{ exam.get_semester_display }}</span><br>
+                        <strong class="text-muted">Sınav Türü:</strong> <span class="fw-bold">{{ exam.get_exam_type_display }}</span><br>
+                        <strong class="text-muted">Tarih:</strong> <span class="fw-bold">{{ exam.exam_date }}</span>
+                    </p>
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'exam_analysis' exam.id %}" class="btn btn-primary">Analiz Et</a>
+                        <a href="{% url 'exam_delete' exam.id %}" class="btn btn-danger"
+                           onclick="return confirm('Bu sınavı silmek istediğinizden emin misiniz?')">Sınavı Sil</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

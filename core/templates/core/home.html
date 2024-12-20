@@ -1,0 +1,55 @@
+{% extends 'core/base.html' %}
+
+{% block title %}GradeLens - Anasayfa{% endblock %}
+
+{% block content %}
+<div class="welcome-dashboard">
+    <div class="header-section text-center mb-5">
+        <div class="dashboard-title-container mb-4 p-4">
+            <h1 class="dashboard-title mb-3">GradeLens Sınav Analiz Sistemi</h1>
+            <p class="dashboard-description">
+                Sınav değerlendirme ve analiz süreçlerinizi kolaylaştıran,
+                detaylı raporlama ve istatistiksel analiz araçları sunan modern çözüm
+            </p>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="stats-card">
+                <div class="stats-icon">
+                    <i class="bi bi-file-earmark-text"></i>
+                </div>
+                <div class="stats-info">
+                    <h3 class="stats-number">{{ exam_count }}</h3>
+                    <p class="stats-label">Toplam Sınav</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="stats-card">
+                <div class="stats-icon">
+                    <i class="bi bi-people"></i>
+                </div>
+                <div class="stats-info">
+                    <h3 class="stats-number">{{ student_count }}</h3>
+                    <p class="stats-label">Toplam Öğrenci</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="stats-card">
+                <div class="stats-icon">
+                    <i class="bi bi-person-badge"></i>
+                </div>
+                <div class="stats-info">
+                    <h3 class="stats-number">{{ lecturer_count }}</h3>
+                    <p class="stats-label">Toplam Öğretim Üyesi</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,97 @@
+{% extends 'core/base.html' %}
+{% block title %}GradeLens - Raporlar{% endblock %}
+
+{% block content %}
+<div class="welcome-dashboard">
+    <div class="header-section text-center mb-5">
+        <div class="page-title-container mb-4 p-4">
+            <h1 class="page-title mb-3">Raporlar</h1>
+            <p class="page-description">
+                Sistemdeki tüm sınavların başarı oranlarını ve analizlerini görüntüleyin.
+            </p>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        {% for report in report_data %}
+        <div class="col-md-6">
+            <div class="card exam-card h-100">
+                <div class="card-header bg-light">
+                    <h5 class="card-title text-primary fw-bold">{{ report.course }} ({{ report.semester }} - {{ report.exam_type }})</h5>
+                    <p class="report-date text-muted">
+                        <strong>Tarih:</strong> {{ report.exam_date }}
+                    </p>
+                </div>
+                <div class="card-body">
+                    <canvas id="chart-{{ report.exam_id }}"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const ctx = document.getElementById("chart-{{ report.exam_id }}").getContext("2d");
+
+                // Başarı oranına göre renk seçimi
+                const successRates = {{ report.success_rates|safe }};
+                const colors = successRates.map(rate => {
+                    if (rate >= 80) return "rgba(76, 175, 80, 0.7)"; // Yeşil
+                    else if (rate >= 60) return "rgba(33, 150, 243, 0.7)"; // Mavi
+                    else if (rate >= 40) return "rgba(255, 193, 7, 0.7)"; // Sarı
+                    else if (rate >= 20) return "rgba(255, 152, 0, 0.7)"; // Turuncu
+                    else return "rgba(244, 67, 54, 0.7)"; // Kırmızı
+                });
+
+                new Chart(ctx, {
+                    type: "bar",
+                    data: {
+                        labels: {{ report.question_numbers|safe }},
+                        datasets: [{
+                            label: "Başarı Oranı (%)",
+                            data: successRates,
+                            backgroundColor: colors,
+                            borderColor: colors.map(color => color.replace("0.7", "1")),
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: "top"
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: "Başarı Oranı (%)",
+                                    font: {
+                                        size: 14,
+                                        weight: "bold"
+                                    }
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: "Sorular",
+                                    font: {
+                                        size: 14,
+                                        weight: "bold"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+        </script>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Chart.js Kütüphanesi -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'core/base.html' %}
+
+{% block title %}GradeLens - Giriş{% endblock %}
+
+{% block content %}
+<div class="user-select">
+    <div class="welcome-section mb-5">
+        <div class="welcome-content text-center p-4">
+            <h2 class="university-title mb-3">Pamukkale Üniversitesi</h2>
+            <h3 class="app-title mb-4">GradeLens Sınav Analiz Sistemi</h3>
+            <div class="welcome-message">
+                <p class="instruction-text">{{ lecturer.full_name }} için giriş yapın</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow">
+        <div class="card-header py-3">
+            <h5 class="card-title mb-0 text-center fw-bold">Giriş</h5>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+
+                <div class="mb-3">
+                    {{ form.password.label_tag }}
+                    {{ form.password }}
+                    {% if form.password.errors %}
+                        <div class="invalid-feedback d-block">
+                            {{ form.password.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">Giriş Yap</button>
+                    <a href="{% url 'password_reset' lecturer.username %}" class="btn btn-link">Parolamı Unuttum</a>
+                    <a href="{% url 'user_select' %}" class="btn btn-secondary">Geri Dön</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

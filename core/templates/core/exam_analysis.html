@@ -1,0 +1,134 @@
+{% extends 'core/base.html' %}
+
+{% block title %}GradeLens - Sınav Analizi{% endblock %}
+
+{% block content %}
+<div class="header-section text-center mb-5">
+    <div class="page-title-container mb-4 p-4">
+        <h1 class="page-title mb-3">
+            {{ exam.course.code }}_{{ exam.get_semester_display }} - {{ exam.get_exam_type_display }}
+        </h1>
+        <p class="page-description text-muted">
+            {{ exam.course.name }}
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="card-title mb-0">Soru Bazlı Analiz</h5>
+                <a href="?export=excel" class="btn btn-success btn-sm">
+                    <i class="fas fa-file-excel me-1"></i>Excel'e Aktar
+                </a>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Soru No</th>
+                        <th>Soru Puanı</th>
+                        <th>Maks Puan</th>
+                        <th>Min Puan</th>
+                        <th>Min Sıfırdan Farklı Puan</th>
+                        <th>Ort Puan</th>
+                        <th>Başarı Oranı</th>
+                        <th>Grafik</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for stat in question_stats %}
+                    <tr>
+                        <td>{{ stat.question_number }}</td>
+                        <td>{{ stat.question_score }}</td>
+                        <td>{{ stat.max_received_score }}</td>
+                        <td>{{ stat.min_score }}</td>
+                        <td>{{ stat.min_non_zero_score }}</td>
+                        <td>{{ stat.avg_score|floatformat:2 }}</td>
+                        <td>{{ stat.success_rate|floatformat:2 }}%</td>
+                        <td>
+                            <div class="progress" style="height: 20px;">
+                                <div class="progress-bar {% if stat.success_rate >= 70 %}bg-success{% elif stat.success_rate >= 40 %}bg-warning{% else %}bg-danger{% endif %}"
+                                     role="progressbar"
+                                     style="width: {{ stat.success_rate }}%"
+                                     aria-valuenow="{{ stat.success_rate }}"
+                                     aria-valuemin="0"
+                                     aria-valuemax="100">
+                                    {{ stat.success_rate|floatformat:2 }}%
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="card-title">Sınav Geneli Analiz</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card border-0 bg-body-tertiary mb-3">
+                            <div class="card-body">
+                                <h6 class="card-title text-body-secondary mb-3">Genel Ortalama</h6>
+                                <h4 class="mb-0 text-body">{{ avg_score|floatformat:2 }}</h4>
+                                <small class="text-body-secondary">Toplam {{ num_students }} öğrenci</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card border-0 bg-body-tertiary mb-3">
+                            <div class="card-body">
+                                <h6 class="card-title text-body-secondary mb-3">Bölüm Ortalamaları</h6>
+                                <p class="mb-2">
+                                    <strong class="text-body">Bilgisayar Müh:</strong>
+                                    <span class="text-body">{{ ceng_avg|floatformat:2 }}</span>
+                                    <small class="text-body-secondary">({{ ceng_count }} öğrenci)</small>
+                                </p>
+                                <p class="mb-0">
+                                    <strong class="text-body">Diğer Bölümler:</strong>
+                                    <span class="text-body">{{ other_avg|floatformat:2 }}</span>
+                                    <small class="text-body-secondary">({{ other_count }} öğrenci)</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <p><strong>Standart Sapma:</strong> {{ std_dev|floatformat:2 }}</p>
+                        <p><strong>Medyan:</strong> {{ median_score|floatformat:2 }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        {% if highest_result %}
+                        <p>
+                            <strong>En Yüksek Puan:</strong> {{ highest_result.total_score|floatformat:2 }}
+                            <a href="/ogrenci-analiz/{{ highest_result.student.student_number }}"
+                               class="btn btn-primary btn-sm">{{ highest_result.student.student_number }}</a>
+                        </p>
+                        {% endif %}
+                        {% if lowest_result %}
+                        <p>
+                            <strong>En Düşük Puan:</strong> {{ lowest_result.total_score|floatformat:2 }}
+                            <a href="/ogrenci-analiz/{{ lowest_result.student.student_number }}"
+                               class="btn btn-primary btn-sm">{{ lowest_result.student.student_number }}</a>
+                        </p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

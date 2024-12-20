@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="tr" data-bs-theme="light">
+<head>
+    {% load static %}
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon-16x16.png' %}">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}GradeLens{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="{% static 'core/css/custom.css' %}" rel="stylesheet">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- PDF.js Kütüphanesi -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        // PDF.js worker'ını yapılandır
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    </script>
+    <style>
+        #pdfViewer {
+            overflow: auto;
+            background-color: #525659;
+            text-align: center;
+        }
+
+        #pdfCanvas {
+            margin: 20px auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        }
+
+        .modal-xl {
+            max-width: 90%;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/">GradeLens</a>
+
+        <div class="d-flex align-items-center">
+            <button id="themeToggle" class="theme-toggle-btn text-light me-3">
+                <i id="moonIcon" class="bi bi-moon-stars-fill"></i>
+                <i id="sunIcon" class="bi bi-sun-fill d-none"></i>
+            </button>
+
+            {% if request.session.lecturer_username %}
+            <span class="text-light me-3">{{ request.session.lecturer_username }}</span>
+            <a href="{% url 'logout' %}" class="btn btn-outline-light btn-sm">Çıkış</a>
+            {% endif %}
+
+            <button class="navbar-toggler ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            {% if request.session.lecturer_username %}
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Anasayfa</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'exam_upload' %}">Sınav Yükle</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'exam_list' %}">Sınav Listesi</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'student_list' %}">Öğrenci Listesi</a>
+                </li>
+                {% comment %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'reports' %}">Raporlar</a>
+                </li>
+                {% endcomment %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'outcomes' %}">Kazanımlar</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'graphs' %}">Grafikler</a>
+                </li>
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+
+<main class="container mt-4">
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show"
+             role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'core/js/theme.js' %}"></script>
+<!-- Grafik sayfası için özel JavaScript ve jsPDF -->
+{% if request.resolver_match.url_name == 'graphs' %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="{% static 'core/js/graphs.js' %}"></script>
+{% endif %}
+{% block extra_js %}{% endblock %}
+</body>
+</html>

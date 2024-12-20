@@ -1,0 +1,167 @@
+{% extends 'core/base.html' %}
+
+{% block title %}GradeLens - Sınav Yükle{% endblock %}
+
+{% block content %}
+<div class="upload-container">
+   <div class="header-section text-center mb-5">
+       <div class="page-title-container mb-4 p-4">
+           <h2 class="page-title mb-3">Sınav Yükleme</h2>
+           <p class="page-description">
+               Değerlendirmek istediğiniz sınavın bilgilerini ve dosyalarını bu sayfadan yükleyebilirsiniz
+           </p>
+       </div>
+   </div>
+
+   <div class="card shadow-sm">
+       <div class="card-body p-4">
+           <form method="post" enctype="multipart/form-data" id="examUploadForm">
+               {% csrf_token %}
+
+               <!-- Sınav Yükleme Türü -->
+               <div class="mb-4">
+                   <label class="form-label fw-bold">Sınav Yükleme Türü</label>
+                   <div class="row">
+                       <div class="col-md-6">
+                           <div class="form-check">
+                               <input class="form-check-input" type="radio" name="upload_type" id="new_exam" value="new" checked>
+                               <label class="form-check-label" for="new_exam">Yeni Sınav Oluştur</label>
+                           </div>
+                       </div>
+                       <div class="col-md-6">
+                           <div class="form-check">
+                               <input class="form-check-input" type="radio" name="upload_type" id="existing_exam" value="existing">
+                               <label class="form-check-label" for="existing_exam">Mevcut Sınava Ekle</label>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+
+               <!-- Mevcut Sınav Seçimi (başlangıçta gizli) -->
+               <div class="mb-4" id="existing_exam_select" style="display: none;">
+                   <label for="existing_exam_id" class="form-label fw-bold">Mevcut Sınav Seçimi</label>
+                   <select class="form-select" id="existing_exam_id" name="existing_exam_id">
+                       <option value="">Sınav seçiniz</option>
+                       {% for exam in recent_exams %}
+                       <option value="{{ exam.id }}">
+                           {{ exam.course.code }}_{{ exam.semester }} - {{ exam.get_exam_type_display }} ({{ exam.exam_date|date:"d.m.Y" }})
+                       </option>
+                       {% endfor %}
+                   </select>
+               </div>
+
+               <!-- Yeni Sınav Form Alanları -->
+               <div id="new_exam_fields">
+                   <!-- Ders Seçimi -->
+                   <div class="mb-4">
+                       <label for="course" class="form-label fw-bold">Ders Seçimi</label>
+                       <select class="form-select" id="course" name="course" required>
+                           <option value="">Ders seçiniz</option>
+                           {% for course in courses %}
+                           <option value="{{ course.code }}">{{ course.code }} - {{ course.name }}</option>
+                           {% endfor %}
+                       </select>
+                   </div>
+
+                   <!-- Dönem Seçimi -->
+                   <div class="mb-4">
+                       <label class="form-label fw-bold">Dönem</label>
+                       <div class="row">
+                           <div class="col-6">
+                               <div class="form-check">
+                                   <input class="form-check-input" type="radio" name="semester" id="guz" value="GUZ" required>
+                                   <label class="form-check-label" for="guz">Güz</label>
+                               </div>
+                           </div>
+                           <div class="col-6">
+                               <div class="form-check">
+                                   <input class="form-check-input" type="radio" name="semester" id="bahar" value="BAHAR">
+                                   <label class="form-check-label" for="bahar">Bahar</label>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+
+                   <!-- Sınav Türü -->
+                   <div class="mb-4">
+                       <label class="form-label fw-bold">Sınav Türü</label>
+                       <div class="row">
+                           <div class="col-md-3 col-6 mb-2">
+                               <div class="form-check">
+                                   <input class="form-check-input" type="radio" name="exam_type" id="vize" value="VIZE" required>
+                                   <label class="form-check-label" for="vize">Vize</label>
+                               </div>
+                           </div>
+                           <div class="col-md-3 col-6 mb-2">
+                               <div class="form-check">
+                                   <input class="form-check-input" type="radio" name="exam_type" id="final" value="FINAL">
+                                   <label class="form-check-label" for="final">Final</label>
+                               </div>
+                           </div>
+                           <div class="col-md-3 col-6">
+                               <div class="form-check">
+                                   <input class="form-check-input" type="radio" name="exam_type" id="butunleme" value="BUTUNLEME">
+                                   <label class="form-check-label" for="butunleme">Bütünleme</label>
+                               </div>
+                           </div>
+                           <div class="col-md-3 col-6">
+                               <div class="form-check">
+                                   <input class="form-check-input" type="radio" name="exam_type" id="mazeret" value="MAZERET">
+                                   <label class="form-check-label" for="mazeret">Mazeret</label>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+
+                   <!-- Sınav Tarihi -->
+                   <div class="mb-4">
+                       <label for="exam_date" class="form-label fw-bold">Sınav Tarihi</label>
+                       <input type="date" class="form-control" id="exam_date" name="exam_date" required>
+                   </div>
+               </div>
+
+               <!-- Dosya Yükleme -->
+               <div class="mb-4">
+                   <label class="form-label fw-bold">Sınav Dosyaları</label>
+                   <div class="upload-area p-4 border rounded">
+                       <div class="text-center mb-3">
+                           <i class="bi bi-cloud-arrow-up display-4"></i>
+                           <p class="mt-2">Sınav dosyalarını buraya sürükleyin veya seçin</p>
+                           <small class="text-muted">Desteklenen formatlar: PDF, PNG, JPEG</small>
+                       </div>
+                       <input type="file" class="form-control" id="exam_files" name="exam_files" multiple required>
+                   </div>
+               </div>
+
+               <!-- Öğrenci Listesi Excel -->
+               <div class="mb-4">
+                   <label for="student_list" class="form-label fw-bold">Öğrenci Listesi (Excel)</label>
+                   <input type="file" class="form-control" id="student_list" name="student_list" accept=".xlsx,.xls" required>
+                   <small class="text-muted">Lütfen öğrenci ad-soyad ve numaralarını içeren Excel dosyasını yükleyin</small>
+               </div>
+
+               <div class="text-center">
+                   <!-- Yükleme Butonu -->
+                   <button type="submit" class="btn btn-primary btn-lg px-5">Yükle</button>
+
+                   <!-- Ayırıcı -->
+                   <div class="mt-4 mb-3">
+                       <hr class="w-25 mx-auto">
+                       <span class="text-muted">veya</span>
+                       <hr class="w-25 mx-auto">
+                   </div>
+
+                   <!-- Manuel Giriş Butonu -->
+                   <a href="{% url 'manual_exam_result' %}" class="btn btn-outline-secondary btn-lg px-5">
+                       <i class="bi bi-pencil-square me-2"></i>Sınav Bilgilerini El ile Gir
+                   </a>
+               </div>
+           </form>
+       </div>
+   </div>
+</div>
+
+<!-- JavaScript dosyasını ekleyin -->
+{% load static %}
+<script src="{% static 'core/js/exam_upload.js' %}"></script>
+{% endblock %}

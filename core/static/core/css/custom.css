@@ -1,0 +1,785 @@
+[data-bs-theme="dark"] {
+    --bs-body-bg: #212529;
+    --bs-body-color: #dee2e6;
+}
+
+.theme-toggle-btn {
+    border: none;
+    background: transparent;
+    padding: 5px 10px;
+}
+
+.user-select {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 0 15px;
+}
+
+.welcome-section {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.welcome-content {
+    background: linear-gradient(145deg, #2196f3, #1976d2);
+    color: white;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+[data-bs-theme="dark"] .welcome-content {
+    background: linear-gradient(145deg, #3a3a3a, #303030);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.university-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.app-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.instruction-text {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    margin-bottom: 0;
+}
+
+.card {
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+[data-bs-theme="dark"] .card {
+    background-color: #2b3035;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.card-header {
+    border-radius: 10px 10px 0 0;
+    background-color: rgba(33, 150, 243, 0.1);
+}
+
+[data-bs-theme="dark"] .card-header {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.list-group-item {
+    transition: all 0.3s ease-in-out;
+    background-color: transparent;
+}
+
+.lecturer-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2196f3;
+}
+
+[data-bs-theme="dark"] .lecturer-name {
+    color: #64b5f6;
+}
+
+.lecturer-username {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #666;
+}
+
+[data-bs-theme="dark"] .lecturer-username {
+    color: #adb5bd;
+}
+
+.list-group-item:hover {
+    background-color: rgba(33, 150, 243, 0.05);
+    transform: translateX(5px);
+}
+
+[data-bs-theme="dark"] .list-group-item:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.bi-arrow-right-circle {
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+    font-size: 1.2rem;
+}
+
+.list-group-item:hover .bi-arrow-right-circle {
+    opacity: 1;
+}
+
+.support-text {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+[data-bs-theme="dark"] .support-text {
+    color: #adb5bd;
+}
+
+/* Ana sayfa stilleri */
+.welcome-dashboard {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.dashboard-title-container {
+    background: linear-gradient(145deg, #2196f3, #1976d2);
+    border-radius: 15px;
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+[data-bs-theme="dark"] .dashboard-title-container {
+    background: linear-gradient(145deg, #3a3a3a, #303030);
+}
+
+.dashboard-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.dashboard-description {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    max-width: 800px;
+    margin: 0 auto;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.stats-card {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    height: 100%;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+[data-bs-theme="dark"] .stats-card {
+    background: #2b3035;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.stats-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.stats-icon {
+    font-size: 2.5rem;
+    color: #2196f3;
+    margin-bottom: 1rem;
+}
+
+[data-bs-theme="dark"] .stats-icon {
+    color: #64b5f6;
+}
+
+.stats-info {
+    width: 100%;
+}
+
+.stats-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+[data-bs-theme="dark"] .stats-number {
+    color: #fff;
+}
+
+.stats-label {
+    font-size: 1.1rem;
+    color: #666;
+    margin: 0;
+    font-weight: 500;
+}
+
+[data-bs-theme="dark"] .stats-label {
+    color: #adb5bd;
+}
+
+/* Sınav yükleme sayfası stilleri */
+.upload-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.page-title-container {
+    background: linear-gradient(145deg, #2196f3, #1976d2);
+    border-radius: 15px;
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+[data-bs-theme="dark"] .page-title-container {
+    background: linear-gradient(145deg, #3a3a3a, #303030);
+}
+
+.page-title {
+    font-size: 2rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.page-description {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin: 0;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.upload-area {
+    background-color: #f8f9fa;
+    border: 2px dashed #dee2e6 !important;
+    transition: all 0.3s ease;
+}
+
+[data-bs-theme="dark"] .upload-area {
+    background-color: #2b3035;
+    border-color: #495057 !important;
+}
+
+.upload-area:hover {
+    background-color: #e9ecef;
+    border-color: #adb5bd !important;
+}
+
+[data-bs-theme="dark"] .upload-area:hover {
+    background-color: #343a40;
+    border-color: #6c757d !important;
+}
+
+.upload-area i {
+    color: #2196f3;
+}
+
+[data-bs-theme="dark"] .upload-area i {
+    color: #64b5f6;
+}
+
+/* Mobile cihazlar - 576px'e kadar */
+@media (max-width: 576px) {
+    /* Başlık boyutları */
+    .university-title {
+        font-size: 1.8rem;
+    }
+
+    .app-title {
+        font-size: 1.5rem;
+    }
+
+    .page-title {
+        font-size: 1.6rem;
+    }
+
+    .dashboard-title {
+        font-size: 1.8rem;
+    }
+
+    .instruction-text, .page-description, .dashboard-description {
+        font-size: 1rem;
+    }
+
+    /* Kartlar ve konteynırlar */
+    .welcome-dashboard {
+        padding: 10px;
+    }
+
+    .stats-card {
+        padding: 1rem;
+    }
+
+    .stats-icon {
+        font-size: 2rem;
+    }
+
+    .stats-number {
+        font-size: 2rem;
+    }
+
+    .stats-label {
+        font-size: 1rem;
+    }
+
+    /* Tablo ve form elemanları */
+    .table {
+        font-size: 0.875rem;
+    }
+
+    .upload-area {
+        padding: 1rem !important;
+    }
+
+    /* Margin ve padding ayarlamaları */
+    .card {
+        margin-bottom: 1rem;
+    }
+
+    .mb-4 {
+        margin-bottom: 1rem !important;
+    }
+
+    .mb-5 {
+        margin-bottom: 1.5rem !important;
+    }
+
+    /* Container genişlikleri */
+    .user-select {
+        margin: 20px auto;
+        padding: 0 10px;
+    }
+
+    .upload-container {
+        padding: 10px;
+    }
+}
+
+/* Tablet - 768px'e kadar */
+@media (max-width: 768px) {
+    /* Navbar düzenlemeleri */
+    .navbar-brand {
+        font-size: 1.4rem;
+    }
+
+    /* Ana sayfa düzenlemeleri */
+    .stats-card {
+        margin-bottom: 1.5rem;
+    }
+
+    .welcome-dashboard {
+        padding: 15px;
+    }
+
+    /* Tablo düzenlemeleri */
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Form düzenlemeleri */
+    .form-label {
+        margin-bottom: 0.3rem;
+    }
+
+    /* Grid sistem düzenlemeleri */
+    .col-md-4 {
+        margin-bottom: 1rem;
+    }
+
+    /* İstatistik kartları */
+    .stats-card {
+        height: auto;
+        min-height: 180px;
+    }
+
+    /* Sınav kartları */
+    .exam-card {
+        margin-bottom: 1rem;
+    }
+
+    /* Upload alanı */
+    .upload-area {
+        margin: 1rem 0;
+    }
+
+    /* Başlık ayarlamaları */
+    .university-title {
+        font-size: 2rem;
+    }
+
+    .app-title {
+        font-size: 1.6rem;
+    }
+
+    .dashboard-title {
+        font-size: 2rem;
+    }
+
+    /* Buton grupları */
+    .btn-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    /* Form grupları arası boşluk */
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    /* Sayfalama */
+    .pagination {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.25rem;
+    }
+
+    /* Alert mesajları */
+    .alert {
+        margin: 0.5rem 0;
+        padding: 0.75rem;
+    }
+}
+
+/* Küçük masaüstü - 992px'e kadar */
+@media (max-width: 992px) {
+    /* Container genişlikleri */
+    .welcome-dashboard {
+        max-width: 95%;
+    }
+
+    .upload-container {
+        max-width: 95%;
+    }
+
+    /* Grid sistem ayarlamaları */
+    .row {
+        margin-left: -10px;
+        margin-right: -10px;
+    }
+
+    .col-lg-4, .col-lg-6, .col-lg-8 {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    /* Tablo ayarlamaları */
+    .table td, .table th {
+        padding: 0.5rem;
+    }
+
+    /* Card grupları */
+    .card-deck {
+        display: flex;
+        flex-flow: row wrap;
+        gap: 1rem;
+    }
+
+    /* İstatistik kartları aralıkları */
+    .stats-card {
+        margin: 0.5rem 0;
+    }
+
+    /* Form elemanları */
+    .form-control {
+        font-size: 0.95rem;
+    }
+
+    /* Butonlar */
+    .btn {
+        padding: 0.375rem 0.75rem;
+    }
+}
+
+/* Orta masaüstü - 1200px'e kadar */
+@media (max-width: 1200px) {
+    /* Container maksimum genişlikleri */
+    .welcome-dashboard {
+        max-width: 90%;
+    }
+
+    /* Grid sistem düzenlemeleri */
+    .container {
+        max-width: 95%;
+    }
+
+    /* İstatistik kartları */
+    .stats-card {
+        padding: 1.5rem;
+    }
+
+    .stats-number {
+        font-size: 2.2rem;
+    }
+
+    /* Tablo düzenlemeleri */
+    .table-responsive {
+        max-height: 600px;
+    }
+
+    /* Form container */
+    .upload-container {
+        max-width: 90%;
+    }
+
+    /* Dashboard başlıkları */
+    .dashboard-title {
+        font-size: 2.2rem;
+    }
+
+    /* Analiz grafikleri container */
+    .analysis-container {
+        max-width: 90%;
+        margin: 0 auto;
+    }
+}
+
+/* Genel performans ve görünüm iyileştirmeleri */
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Smooth scroll davranışı */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Transition animasyonları için performans iyileştirmesi */
+.card,
+.btn,
+.form-control,
+.stats-card,
+.list-group-item {
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+/* Mobil cihazlarda touch davranışı */
+@media (hover: none) and (pointer: coarse) {
+    .card:hover,
+    .btn:hover,
+    .list-group-item:hover {
+        transform: none !important;
+    }
+}
+
+/* Yazdırma stili */
+@media print {
+    .navbar,
+    .btn-group,
+    .theme-toggle-btn {
+        display: none !important;
+    }
+
+    body {
+        padding: 20px !important;
+    }
+
+    .card {
+        break-inside: avoid;
+        border: 1px solid #ddd !important;
+        box-shadow: none !important;
+    }
+
+    .table {
+        border-collapse: collapse !important;
+    }
+
+    .table td,
+    .table th {
+        background-color: #fff !important;
+    }
+}
+
+/* Açık tema için tablo başlıkları */
+.table-header-link {
+    color: #333; /* Açık tema için koyu renk */
+    font-weight: bold;
+}
+
+/* Koyu tema için tablo başlıkları */
+[data-bs-theme="dark"] .table-header-link {
+    color: #dee2e6 !important; /* Koyu tema için açık renk */
+    font-weight: bold;
+    text-decoration: none;
+
+/* Hover durumu için koyu tema */
+[data-bs-theme="dark"] .table-header-link:hover {
+    color: #ffffff !important; /* Hover sırasında daha açık renk */
+    text-decoration: underline; /* Alt çizgiyle belirginleştirme */
+}
+
+/* Açık tema için tarih yazısı */
+.report-date {
+    color: #555; /* Açık tema için orta koyulukta renk */
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Koyu tema için tarih yazısı */
+[data-bs-theme="dark"] .report-date {
+    color: #dee2e6 !important; /* Koyu tema için açık renk */
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* text-muted'in etkisini kaldırmak için override */
+.report-date.text-muted {
+    color: inherit !important; /* text-muted sınıfını etkisiz hale getir */
+}
+
+/* Grafik sayfası stilleri */
+.chart-container {
+    position: relative;
+    height: 400px;
+    width: 100%;
+}
+
+.form-check {
+    margin-bottom: 0.5rem;
+}
+
+.card .card-header h5 {
+    margin-bottom: 0;
+}
+
+#chartContainer {
+    background-color: white;
+    border-radius: 4px;
+    padding: 1rem;
+}
+
+[data-bs-theme="dark"] #chartContainer {
+    background-color: #2b3035;
+}
+
+.dimension-checkbox:checked + .form-check-label,
+.metric-checkbox:checked + .form-check-label {
+    color: #2196F3;
+    font-weight: 500;
+}
+
+.btn-group .btn {
+    padding: 0.25rem 0.75rem;
+    font-size: 0.875rem;
+}
+
+#examSelectionContainer {
+    background-color: rgba(0,0,0,0.1);
+    padding: 1rem;
+    border-radius: 4px;
+    margin-top: 1rem;
+}
+
+#examSelect {
+    width: 100%;
+    margin-top: 0.5rem;
+}
+
+/* Grafik sayfası için ek stiller */
+#examSelectionContainer {
+    background-color: rgba(33, 150, 243, 0.1);
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+#examSelectionContainer select {
+    width: 100%;
+}
+
+[data-bs-theme="dark"] #examSelectionContainer {
+    background-color: rgba(33, 150, 243, 0.05);
+}
+
+.dimension-checkbox:checked + .form-check-label,
+.metric-checkbox:checked + .form-check-label {
+    color: #2196F3;
+    font-weight: 500;
+}
+
+.card-body .form-check {
+    margin-bottom: 0.5rem;
+}
+
+.form-label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+#chartContainer {
+    min-height: 400px;
+}
+
+/* Mobil responsive düzenlemeler */
+@media (max-width: 768px) {
+    .col-md-3 {
+        margin-bottom: 1rem;
+    }
+
+    #chartContainer {
+        height: 300px;
+    }
+}
+
+/* Student_Analysis Pdf */
+.modal-header {
+    background: var(--bs-primary);
+    color: white;
+}
+
+.modal-header .btn-close {
+    filter: brightness(0) invert(1);
+}
+
+#examPaperFile:focus {
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.btn-group {
+    gap: 0.5rem;
+}
+
+.btn-group .btn {
+    border-radius: 0.375rem !important;
+}
+
+.progress {
+    background-color: #f8f9fa;
+    border-radius: 0.25rem;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
+}
+
+.progress-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    white-space: nowrap;
+    transition: width .6s ease;
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+/* Progress bar renk tonları */
+.bg-success {
+    background-color: #28a745 !important;
+}
+
+.bg-warning {
+    background-color: #ffc107 !important;
+    color: #212529 !important;
+}
+
+.bg-danger {
+    background-color: #dc3545 !important;
+}
+
+/* Koyu tema için progress bar ayarları */
+[data-bs-theme="dark"] .progress {
+    background-color: #343a40;
+}
+
+[data-bs-theme="dark"] .bg-warning {
+    color: #fff !important;
+}

@@ -1,0 +1,51 @@
+{% extends 'core/base.html' %}
+
+{% block title %}{{ exam.course.code }} - Kazanım Ekle{% endblock %}
+
+{% block content %}
+<div class="welcome-dashboard">
+    <div class="header-section text-center mb-5">
+        <div class="page-title-container mb-4 p-4">
+            <h1 class="page-title mb-3">{{ exam.course.code }} - Kazanım Ekle</h1>
+            <p class="page-description">
+                {{ exam.get_exam_type_display }} sınavı için kazanımları ekleyin ve düzenleyin.
+            </p>
+        </div>
+    </div>
+
+    <div class="container mt-4">
+        <form method="post" class="mb-4">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="d-flex justify-content-between align-items-center">
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+                <a href="{% url 'show_outcomes' exam.id %}" class="btn btn-info">Kazanımları Göster</a>
+            </div>
+        </form>
+
+        {% if existing_outcomes %}
+        <h3 class="mb-3">Mevcut Kazanımlar</h3>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Soru No</th>
+                    <th>Kazanım</th>
+                    <th>Katkı Yüzdesi</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for outcome in existing_outcomes %}
+                <tr>
+                    <td>{{ outcome.question_number }}</td>
+                    <td>{{ outcome.outcome.description }}</td>
+                    <td>%{{ outcome.contribution_percentage }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

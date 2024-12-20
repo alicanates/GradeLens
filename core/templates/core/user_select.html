@@ -1,0 +1,42 @@
+{% extends 'core/base.html' %}
+
+{% block title %}GradeLens - Kullanıcı Seçimi{% endblock %}
+
+{% block content %}
+<div class="user-select">
+    <div class="welcome-section mb-5">
+        <div class="welcome-content text-center p-4">
+            <h2 class="university-title mb-3">Pamukkale Üniversitesi</h2>
+            <h3 class="app-title mb-4">GradeLens Sınav Analiz Sistemi</h3>
+            <div class="welcome-message">
+                <p class="instruction-text">Sisteme giriş yapmak için lütfen kullanıcı seçiniz</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow">
+        <div class="card-header py-3">
+            <h5 class="card-title mb-0 text-center fw-bold">Öğretim Üyeleri</h5>
+        </div>
+        <div class="card-body">
+            <div class="list-group list-group-flush">
+                {% for lecturer in lecturers %}
+                <a href="{% url 'login' lecturer.username %}"
+                   class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3 border-bottom">
+                    <div>
+                        <h6 class="mb-1 lecturer-name">{{ lecturer.full_name }}</h6>
+                        <div class="lecturer-username">{{ lecturer.username }}</div>
+                    </div>
+                    <span class="text-primary">
+                        <i class="bi bi-arrow-right-circle"></i>
+                    </span>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="card-footer text-center py-3">
+            <small class="support-text">Teknik destek için lütfen sistem yöneticisi ile iletişime geçiniz</small>
+        </div>
+    </div>
+</div>
+{% endblock %}
