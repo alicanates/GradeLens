@@ -211,7 +211,7 @@ Uygulama loglarını logs/ dizininde bulabilirsiniz:
 ------
 Sorunlarınız için:
 - GitHub Issues: <proje-issues-url>
-- E-posta: <destek-email>
+- E-posta: aates21@posta.pau.edu.tr
 
 ## Lisans
 ------
@@ -219,8 +219,8 @@ Bu proje MIT lisansı altında lisanslanmıştır.
 
 ## Katkıda Bulunanlar
 ------------------
-- Proje Sahibi: [Ad Soyad]
-- Geliştirici: [Ad Soyad]
+- Proje Sahibi: Ali Can Ateş
+- Geliştirici: Ali Can Ateş
 
 ## Versiyon Geçmişi
 ---------------
